@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column left">
+  <img src="images/portrait.jpg" class="portrait" alt="Portrait" />
+</div>
+<div class="column right">
+  <h1>{{ config.extra.greeting | default(value="Hello") }}</h1>
+  <h2>{{ config.extra.iam | default(value="I am") }} {{ config.extra.author.name | default(value="Hallo") }}.</h2>
+  <p>{{ section.content | safe }}</p>
+
+  {% if config.extra.links %}
+      <div class="links">
+          {% for link in config.extra.links %}
+              <a rel="me" href="{{ link.url }}" title="{{ link.title }}">
+                  {% if link.iconset %}
+                      <span class="{{ link.iconset }} {{ 'fa-' ~ link.icon }}"></span>
+                  {% else %}
+                      <span class="fab {{ 'fa-' ~ link.icon }}"></span>
+                  {% endif %}
+              </a>
+          {% endfor %}
+      </div>
+  {% endif %}
+</div>
+{% endblock content %}
