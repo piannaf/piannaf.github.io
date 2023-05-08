@@ -34,13 +34,18 @@
   {% endif %}
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+{% if config.mode == "build" %}
+    {% set GA4ID = "G-B07SSRVEYQ" %}
+{% else %}
+    {% set GA4ID = "G-7GLFQ4H8NT" %}
+{% endif %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ GA4ID }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-B07SSRVEYQ');
+  gtag('config', '{{ GA4ID }}');
 </script>
 </head>
 
