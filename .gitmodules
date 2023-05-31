@@ -1,3 +1,6 @@
 [submodule "themes/hallo"]
 	path = themes/hallo
 	url = https://github.com/janbaudisch/zola-hallo.git
+[submodule "themes/kodama-theme"]
+	path = themes/kodama-theme
+	url = https://github.com/adfaure/kodama-theme.git

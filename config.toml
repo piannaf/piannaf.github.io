@@ -2,13 +2,26 @@
 base_url = "https://piannaf.com"
 
 # The site theme to use
-theme = "hallo"
+theme = "kodama-theme"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
+title = "Justin Mancinelli"
+
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
+
+[translations]
+Biography = "Biography"
+Interests = "Interests"
+Education = "Education"
+toc = "Table of Contents"
+Published = "Published"
+Abstract = "Abstract"
+volume = "volume"
+number = "number"
+pages = "pages"
 
 [markdown]
 # Whether to do syntax highlighting
@@ -16,14 +29,19 @@ build_search_index = false
 highlight_code = false
 
 [extra]
-# Put all your custom variables here
+# Image of your avatar displayed on the landing page
+avatar = "static/images/portrait.jpg"
+# Image of the favicon
+favicon = "static/images/portrait.jpg"
 
-links = [
-    { title = "E-Mail", url = "mailto:justin.mancinelli@gmail.com", iconset = "fas", icon = "envelope" },
-    { title = "Linkedin", url = "https://www.linkedin.com/in/justinmancinelli/", icon = "linkedin" },
-    { title = "GitHub", url = "https://github.com/piannaf", icon = "github" },
-    { title = "Mastodon", url = "https://fosstodon.org/@piannaf", icon = "mastodon" }
+# Your email address showed in the contact section
+email = "justin.mancinelli@gmail.com"
+
+# If you don't want to show your contact information in the index
+contact_in_index = true
+
+# Additional menu items
+# `Name` is what it is displayed, `path` is the url
+menu_items = [
+  # { path = "#contacts", name = "Contact" },
 ]
-
-[extra.author]
-name = "Justin Mancinelli"
