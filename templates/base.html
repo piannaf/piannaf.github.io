@@ -4,6 +4,7 @@
 {% import 'macros/icons.html' as icons -%}
 {% import 'macros/blog.html' as blog -%}
 {% import 'macros/publication.html' as publication -%}
+{% import 'macros/ga4.html' as ga4 -%}
 
 <!DOCTYPE html>
 <html lang="{{ lang | default(value=config.default_language)}}">
@@ -31,6 +32,14 @@
     {% block title -%}
       {% set section = load_data(path=current_path ~ "_index.md", metadata_only=true, required = false)  -%}
     {% endblock title -%}
+
+    {% block ga4 -%}
+      {% if config.mode == "build" %}
+        {{ ga4::script(property_id="G-B07SSRVEYQ") }}
+      {% else %}
+        {{ ga4::script(property_id="G-7GLFQ4H8NT") }}
+      {% endif %}
+    {% endblock ga4 -%}
   {% endblock head -%}
 </head>
 
