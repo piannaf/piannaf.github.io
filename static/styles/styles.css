@@ -1463,13 +1463,19 @@ video {
   background-color: white;
 }
 
-.zola-anchor {
-  padding-left: 0.5rem;
-  opacity: .6;
-}
-
-.zola-anchor:hover {
-  opacity: 1;
+h1, h2, h3, h4, h5, h6 {
+  .zola-anchor {
+    visibility: hidden;
+    text-decoration: none;
+    border-bottom-color: transparent;
+    cursor: pointer;
+    padding-left:1rem;
+  }
+  &:hover {
+    .zola-anchor {
+      visibility: visible;
+    }
+  }
 }
 
 .visited\:fill-purple-600:visited {
