@@ -26,7 +26,8 @@ pages = "pages"
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = false
+highlight_code = true
+highlight_theme = "charcoal"
 
 [extra]
 # Image of your avatar displayed on the landing page

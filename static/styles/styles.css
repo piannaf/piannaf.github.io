@@ -1478,6 +1478,11 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.youtube-iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
 .visited\:fill-purple-600:visited {
   fill: #9333ea;
 }
