@@ -35,6 +35,6 @@ Confirmation that the app is React Native
 
 ![Main Activity](heer64vbmx2kncs8do97.png)
 
-No, I don't consider React Native to be native. On [the scale of web to native](@/blog/2019-08-22-the-future-of-cross-platform-is-native/index.md), it is almost in hybrid tools territory.
+No, I don't consider React Native to be native. On [the scale of web to native](@/blog/2019-03-27-the-future-of-cross-platform-is-native/index.md), it is almost in hybrid tools territory.
 
 React Native tends to perform better on iOS than Android, though [Hermes is supposed to narrow that gap](https://dev.to/rishikc/react-native-just-got-better-the-new-javascript-engine-is-here-7nl). But given the negative Android reviews are mostly not about performance, that doesn't seem to be the issue.
