@@ -54,7 +54,9 @@
     <a class="rounded-md border-solid border border-blue-600 inline-flex items-center text-blue-600 justify-center px-2 py-1 mr-2 text-xs font-bold" target="_blank" href="{{ config.base_url ~ page.path ~ page.extra.video_file }}"> Video </a>
   {% endif -%}
   
-  {% if bibdata and bibdata.url -%}
+  {% if page.extra.url %}
+  <a class="rounded-md border-solid border border-blue-600 inline-flex items-center text-blue-600 justify-center px-2 py-1 mr-2 text-xs font-bold" target="_blank" href="{{page.extra.url}}"> URL </a>
+  {% elif bibdata and bibdata.url -%}
     <a class="rounded-md border-solid border border-blue-600 inline-flex items-center text-blue-600 justify-center px-2 py-1 mr-2 text-xs font-bold" target="_blank" href="{{bibdata.url}}"> URL </a>
   {% endif -%}
 {% endmacro %}
