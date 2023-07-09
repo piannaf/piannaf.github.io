@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="font-sans py-8">
+    <h1 class="font-bold font-sans break-normal text-gray-900 pb-2 text-3xl md:text-4xl">{{section.title}}</h1>
+  </div>
+
+  <article class="prose prose-indigo max-w-3xl">
+    {{ section.content | safe }}
+  </article>
+
+
+  <div class="pb-4">
+    <ul class="list-disc pl-4">
+      {% for publication_type in section.extra.publications_types -%}
+      <li><a class="text-lg font-bold text-blue-600 hover:text-blue-800 visited:text-purple-600" href="#{{publication_type.title}}">{{publication_type.title}}</a></li>  
+      {% endfor %}
+    </ul> 
+  </div>
+
+  {% for publication_type in section.extra.publications_types -%}
+    <div class ="prose prose-indigo py-4">
+      <h2 class="" id="{{publication_type.title}}">{{publication_type.title}}<a class="zola-anchor" href="#{{publication_type.title}}" aria-label="Anchor link for: {{publication_type.title}}">#</a></h2>
+    </div>
+
+    <ul>
+    {% for page in section.pages  -%}
+      {% if page.extra.type == publication_type.type -%}
+      <li class="pb-3">
+        {{ publication::summary(page=page) }}
+      </li>
+      {% endif  -%}
+    {% endfor -%}
+    </ul>
+  {% endfor -%}
+</div>
+{% endblock content %}

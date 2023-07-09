@@ -7,7 +7,7 @@ In this #TLTouchPoints episode, I get Realmʼs Kotlin Multiplatform sample app r
 
 [extra]
 authors = ["Justin Mancinelli"]
-type = "podcast"
+type = "tltouchpoints"
 publication = "#TLTouchPoints"
 video_yt = "FJhuHl2km7g"
 url = "https://touchlab.co/realm-kotlin-multiplatform-sample-app/"

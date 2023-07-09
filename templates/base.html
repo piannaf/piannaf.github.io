@@ -28,7 +28,7 @@
     <link rel="canonical" href="{{ get_url(path=current_path) }}" />
   {% endif %}
 
-  <title>{% if section -%}{{ section.title }} | {% endif %} {{ config.title }}</title>
+  <title>{% if page -%}{{ page.title }} | {% endif %} {% if section -%}{{ section.title }} | {% endif %} {{ config.title }}</title>
 
   {% block head -%}
     {% block css -%}

@@ -7,7 +7,7 @@ In this episode of #TLTouchPoints I summarize the key insights from the results 
 
 [extra]
 authors = ["Justin Mancinelli"]
-type = "podcast"
+type = "tltouchpoints"
 publication = "#TLTouchPoints"
 video_yt = "VexkgtUM-FM"
 url = "https://touchlab.co/jetbrains-survey-kotlin-multiplatform/"

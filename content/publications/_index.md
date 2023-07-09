@@ -1,5 +1,5 @@
 +++
-title = "Public Speaking"
+title = "Videos"
 weight = 3
 sort_by = "date"
 template = "publications.html"
@@ -11,7 +11,9 @@ extra.name = "Videos"
 extra.index_show = true
 
 extra.publications_types = [
-  { title = "Podcasts", type = "podcast" },
+  { title = "A Touch of Multiplatform", type = "atom" },
   { title = "Conferences", type = "conference" },
+  { title = "Touchlab Share", type = "tlshare" },
+  { title = "Touchlab Touchpoints", type = "tltouchpoints" },
 ]
 +++

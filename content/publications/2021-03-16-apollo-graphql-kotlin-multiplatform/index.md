@@ -7,7 +7,7 @@ In this #TLTouchPoints episode, I cover Apollo GraphQL Mobile Day 2021 and dive 
 
 [extra]
 authors = ["Justin Mancinelli"]
-type = "podcast"
+type = "tltouchpoints"
 publication = "#TLTouchPoints"
 video_yt = "5dTtTwh_ybE"
 url = "https://touchlab.co/apollo-graphql-kotlin-multiplatform/"
