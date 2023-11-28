@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://touchlab.co/kotlin-multiplatform-cant-do-it-all/" />
+  
+
+  <title>Kotlin Multiplatform Can’t Do It All. Which is Exactly Why You Should Try It! |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">Kotlin Multiplatform Can’t Do It All. Which is Exactly Why You Should Try It!</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2019-08-20</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <p>Before I begin, I want to be clear that all tools are created to solve problems, but none of them solve all problems. If your development team is in a hurry, or high-quality UI is not a major priority, go ahead and choose an ‘end-to-end’ development platform like Xamarin or Flutter or React Native to code your app for Android and iOS. You’ll get the job done 🎉!</p>
+<p>Now, if you already have UIs for your apps, or if you want optimized UI for each platform, you’ll want to use Kotlin Multiplatform. The reason? It doesn’t do UI at all (not yet, anyway). But what it does do — and really well — is <a href="https://touchlab.co/future-shared-code-kotlin-multiplatform/">business logic for Android and iOS apps</a>.</p>
+<h2 id="though-the-other-multiplatform-solutions-aspire-to-support-all-application-layers-they-can-t-adequately-cover-them-all">Though the other multiplatform solutions aspire to support all application layers, they can’t adequately cover them all.<a class="zola-anchor" href="#though-the-other-multiplatform-solutions-aspire-to-support-all-application-layers-they-can-t-adequately-cover-them-all" aria-label="Anchor link for: though-the-other-multiplatform-solutions-aspire-to-support-all-application-layers-they-can-t-adequately-cover-them-all">#</a></h2>
+<p>And sharing UI code across platforms is not necessarily desirable anyway. Very often when this is done, there will need to be multiple iterations to make the UI look and behave more natively. This will burn through development cycles, putting more pressure on your dev teams to deliver on time. And normally, the business is pushing for more features over UI quality. Sharing UI is risky, and it’s rarely good for morale, or for business.</p>
+<h2 id="unlike-xamarin-flutter-or-react-native-kotlin-multiplatform-does-not-live-within-its-own-ecosystem-instead-it-is-very-much-like-a-choose-your-own-adventure-book-which-is-what-makes-it-so-powerful">Unlike Xamarin, Flutter or React Native, Kotlin Multiplatform does not live within its own ecosystem. Instead, it is very much like a “choose your own adventure” book, which is what makes it so powerful.<a class="zola-anchor" href="#unlike-xamarin-flutter-or-react-native-kotlin-multiplatform-does-not-live-within-its-own-ecosystem-instead-it-is-very-much-like-a-choose-your-own-adventure-book-which-is-what-makes-it-so-powerful" aria-label="Anchor link for: unlike-xamarin-flutter-or-react-native-kotlin-multiplatform-does-not-live-within-its-own-ecosystem-instead-it-is-very-much-like-a-choose-your-own-adventure-book-which-is-what-makes-it-so-powerful">#</a></h2>
+<p>While KMP currently has limited libraries (though the number is growing), it does enable you to use all existing libraries and tools on iOS and Android, so there’s no need to wait for libraries or implement hacks and workarounds. You can’t do that with Flutter or React Native without running into sizable obstacles.</p>
+<p>The output from Kotlin Multiplatform is just another package on Android and framework on iOS. That can save a significant amount of time and headaches because there is far less time spent writing bridge code or fully re-writing the things that are missing from other solutions. </p>
+<p>To code business logic in Flutter, your team first has to code shared logic in a language that is not widely used – Dart – in a new ecosystem, with a smaller community, and difficulty bridging it with existing code. In React Native, your mobile team would need to immerse themselves in the web ecosystem of JavaScript’s new IDEs and other tools . And in Xamarin, they’d have to code in C# , use Visual Studio, and a smaller, less active community. To make matters worse, whichever of these platforms your team uses, they’ll need a communication bridge between native and non-native code. </p>
+<h2 id="in-kotlin-multiplatform-however-your-team-can-code-the-platform-specific-business-logic-with-direct-communication-with-the-native-platform-with-no-need-to-wait-for-libraries-or-implement-hacks-or-workarounds">In Kotlin Multiplatform, however, your team can code the platform-specific business logic, with direct communication with the native platform, with no need to wait for libraries or implement hacks or workarounds.<a class="zola-anchor" href="#in-kotlin-multiplatform-however-your-team-can-code-the-platform-specific-business-logic-with-direct-communication-with-the-native-platform-with-no-need-to-wait-for-libraries-or-implement-hacks-or-workarounds" aria-label="Anchor link for: in-kotlin-multiplatform-however-your-team-can-code-the-platform-specific-business-logic-with-direct-communication-with-the-native-platform-with-no-need-to-wait-for-libraries-or-implement-hacks-or-workarounds">#</a></h2>
+<p>(You can if you want, that’s part of the adventure you choose.) And even if there are any issues, optional sharing with Kotlin Multiplatform means you only need to revert the code directly related to the issue — no ripping out the whole engine because of a bad spark plug. So, you always have choices. </p>
+<p>This is important of course, because it’s the business logic that determines how all features within an app will work. Because you’re writing the native code once for this layer, you accelerate development time and help ensure a solid code base. Plus, writing one set of native code is a highly effective way of future-proofing the code for later releases.</p>
+<h2 id="kotlin-multiplatform-in-other-words-provides-your-dev-teams-with-greater-flexibility">Kotlin Multiplatform, in other words, provides your dev teams with greater flexibility.<a class="zola-anchor" href="#kotlin-multiplatform-in-other-words-provides-your-dev-teams-with-greater-flexibility" aria-label="Anchor link for: kotlin-multiplatform-in-other-words-provides-your-dev-teams-with-greater-flexibility">#</a></h2>
+<p>The other multiplatform solutions are essentially proprietary, resulting in vendor lock-in. It also results in the need to manage, in effect, a third platform because the ecosystems are too different from the native platforms and, because they try to solve everything but they can’t solve everything, you will need to write more platform specific code than advertised.</p>
+<p>Unlike Xamarin and React Native, Kotlin Multiplatform doesn’t require a VM. Flutter doesn’t require a VM in production, but it does put you in a non-native ecosystem writing in a non-native language unlike Kotlin Multiplatform which respects the native languages and ecosystems of each platform. Kotlin Multiplatform is the most native multiplatform solution your team can use today. </p>
+<h2 id="kmp-doesn-t-hide-the-fact-that-you-re-dealing-with-multiple-platforms-because-it-already-compiles-to-a-native-library-for-ios-or-android">KMP doesn’t hide the fact that you’re dealing with multiple platforms because it already compiles to a native library for iOS or Android.<a class="zola-anchor" href="#kmp-doesn-t-hide-the-fact-that-you-re-dealing-with-multiple-platforms-because-it-already-compiles-to-a-native-library-for-ios-or-android" aria-label="Anchor link for: kmp-doesn-t-hide-the-fact-that-you-re-dealing-with-multiple-platforms-because-it-already-compiles-to-a-native-library-for-ios-or-android">#</a></h2>
+<p>There are no intermediate layers to deal with, virtually eliminating any interop bottlenecks. And since Kotlin Multiplatform works with the native platform ecosystems rather than becoming its own, devs can use the tools and libraries they’ve always used including new platform innovations like SwiftUI and Jetpack Compose. Limitations you do encounter are not dead ends because you can always code around them with Kotlin, Swift, or whatever language lets you solve the issue with the least risk.</p>
+<h2 id="ranking-multiple-cross-platform-development-solutions">Ranking multiple cross-platform development solutions<a class="zola-anchor" href="#ranking-multiple-cross-platform-development-solutions" aria-label="Anchor link for: ranking-multiple-cross-platform-development-solutions">#</a></h2>
+<p>In sum, here’s how we at <a href="https://touchlab.co">Touchlab</a> measure the world of multiplatform solutions. Next week, we’ll share more details about the specifics of our rankings. In the meantime, if you’re interested in speaking to us about Kotlin Multiplatform, please <a href="https://touchlab.co/contact-us/">contact us</a>.</p>
+<p><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--y-p04eWp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://4d4f6p22cgml1ale382crgth-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/Harvey-Scorecard-%25E2%2580%2593-4%402x-1080x608.png" alt="Ranking multiple cross-platform development solutions" /></p>
+<hr />
+<p>This post originally written for <a href="https://touchlab.co/kotlin-multiplatform-cant-do-it-all/">Touchlab</a></p>
+<hr />
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>

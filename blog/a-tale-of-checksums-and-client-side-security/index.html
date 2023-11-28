@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://piannaf.com/blog/a-tale-of-checksums-and-client-side-security" />
+  
+
+  <title>A tale of checksums and client-side security🙀 |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">A tale of checksums and client-side security🙀</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2020-01-06</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <h2 id="chapter-1-when-you-come-to-a-fork-in-the-road-take-it">Chapter 1 - When you come to a fork in the road, take it<a class="zola-anchor" href="#chapter-1-when-you-come-to-a-fork-in-the-road-take-it" aria-label="Anchor link for: chapter-1-when-you-come-to-a-fork-in-the-road-take-it">#</a></h2>
+<p><sup>📝 As once said by <a href="https://quoteinvestigator.com/2013/07/25/fork-road/">Yogi Berra</a></sub></p>
+<p>I was wandering through the int<strong>ra</strong>net at a previous job looking at what other similar teams were up to and came across a link to their product's test environment (open to the int<strong>er</strong>net). Unfortunately, it was password protected:</p>
+<p><img src="https://thepracticaldev.s3.amazonaws.com/i/1xj9en4r4lymo542y6ez.png" alt="Password prompt" /></p>
+<figcaption>URL redacted -- as of this writing it points to a 404</figcaption>
+<p>At first glance, I thought it was <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication">basic authentication</a> because of the alert window. On second glance, it was definitely a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt"><code>window.prompt()</code></a> box. And the code looked like this:</p>
+<pre data-lang="javascript" style="background-color:#2b2c2f;color:#cccece;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#c594c5;">function </span><span style="color:#6699cc;">promptUserForPassword</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">pass</span><span style="color:#5fb3b3;">) {
+</span><span>  </span><span style="color:#c594c5;">if </span><span>(</span><span style="color:#6699cc;">jesChecksum</span><span>(pass) </span><span style="color:#5fb3b3;">!= </span><span style="color:#f99157;">9887</span><span>) </span><span style="color:#5fb3b3;">{
+</span><span>    pass </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">prompt</span><span>(</span><span style="color:#5fb3b3;">&quot;</span><span style="color:#99c794;">Please enter the passkey</span><span style="color:#5fb3b3;">&quot;,&quot;&quot;</span><span>)</span><span style="color:#5fb3b3;">;
+</span><span>
+</span><span>    </span><span style="color:#c594c5;">if </span><span>(pass </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">null</span><span>) </span><span style="color:#5fb3b3;">{
+</span><span>      document</span><span style="color:#5fb3b3;">.</span><span>location</span><span style="color:#5fb3b3;">.</span><span>href </span><span style="color:#5fb3b3;">= </span><span>defaultHref</span><span style="color:#5fb3b3;">;
+</span><span>    </span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else </span><span style="color:#5fb3b3;">{
+</span><span>      </span><span style="color:#6699cc;">verifyPassword</span><span>(pass)</span><span style="color:#5fb3b3;">;
+</span><span>    </span><span style="color:#5fb3b3;">}
+</span><span>  </span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else </span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">successfulLogin</span><span>(pass)</span><span style="color:#5fb3b3;">;
+</span><span>  </span><span style="color:#5fb3b3;">}
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<p><strong>Since this is client-side authentication, I could just look into <code>successfulLogin</code> and force success without any password. But what's the fun in that?</strong></p>
+<p>It was much for fun to see if I could get <code>jesChecksum(pass)</code> to equal <code>9887</code>. The first hint that it was probably fairly easy is that the function hints the algorithm is a checksum.</p>
+<h2 id="chapter-2-checksums-are-unsuitable-for-any-kind-of-security-work">Chapter 2 - Checksums are unsuitable for any kind of security work<a class="zola-anchor" href="#chapter-2-checksums-are-unsuitable-for-any-kind-of-security-work" aria-label="Anchor link for: chapter-2-checksums-are-unsuitable-for-any-kind-of-security-work">#</a></h2>
+<p><sup>📝 As pointed out by <a href="https://blog.codinghorror.com/checksums-and-hashes/">Jeff Atwood</a></sup></p>
+<h3 id="first-let-s-consult-wikipedia-to-find-out-what-a-checksum-is">First, let's consult Wikipedia to find out <a href="https://en.m.wikipedia.org/wiki/Checksum">what a checksum is</a>:<a class="zola-anchor" href="#first-let-s-consult-wikipedia-to-find-out-what-a-checksum-is" aria-label="Anchor link for: first-let-s-consult-wikipedia-to-find-out-what-a-checksum-is">#</a></h3>
+<blockquote>
+<p>A checksum or hash sum is a small-size datum from a block of digital data for the purpose of detecting errors which may have been introduced during its transmission or storage. By themselves checksums are often used to verify data integrity, but should not be relied upon to also verify data authenticity.</p>
+</blockquote>
+<p><img src="https://thepracticaldev.s3.amazonaws.com/i/xguxd9akztgj3lz7az57.png" alt="Checksum illustration" /></p>
+<p>It's interesting that another name is &quot;hash sum&quot; but, it's very clear from the above quote, the functions you use to hash your passwords aren't the same as a checksum.</p>
+<h3 id="so-what-s-a-hash-function-back-to-wikipedia">So <a href="https://en.m.wikipedia.org/wiki/Hash_function">what's a hash function</a>? Back to Wikipedia:<a class="zola-anchor" href="#so-what-s-a-hash-function-back-to-wikipedia" aria-label="Anchor link for: so-what-s-a-hash-function-back-to-wikipedia">#</a></h3>
+<blockquote>
+<p>A hash function is any function that can be used to map digital data of arbitrary size to digital data of fixed size.</p>
+</blockquote>
+<p><img src="https://thepracticaldev.s3.amazonaws.com/i/s2d0npjxuwim7q1kozkp.png" alt="Hash function illustration" /></p>
+<p>Ok, then checksums are a kind of hash function. There are lots of different kinds of hash functions. They can do lots of different processing to generate the hash. The resulting hash can be of different sizes. Most importantly, different hash functions have different properties: speed, reversibility, number of collisions...</p>
+<p>Collisions and speed are super important for the hashing functions that back <a href="https://www.perl.com/pub/2002/10/01/hashes.html/">perl hashes</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">java hashmaps</a>, <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">python dictionaries</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects">javascript objects</a>. Too slow, and the initial <code>O(1)</code> lookup is slow; too many collisions, and lookups will need to <code>O(n)</code> traverse the list in the bucket.</p>
+<h3 id="what-about-those-password-hashes-enter-cryptographic-hash-functions">What about those password hashes? Enter <a href="https://en.m.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic hash functions</a><a class="zola-anchor" href="#what-about-those-password-hashes-enter-cryptographic-hash-functions" aria-label="Anchor link for: what-about-those-password-hashes-enter-cryptographic-hash-functions">#</a></h3>
+<p>Unlike checksums and the hash functions used for associative arrays, Wikipedia tells us:</p>
+<blockquote>
+<p>The ideal cryptographic hash function has four main properties:</p>
+<ol>
+<li>it is easy to compute the hash value for any given message</li>
+<li>it is infeasible to generate a message from its hash</li>
+<li>it is infeasible to modify a message without changing the hash (avalanche effect)</li>
+<li>it is infeasible to find two different messages with the same hash.</li>
+</ol>
+</blockquote>
+<p>#1 and #2 mean it is much faster to figure out the hash than it is to figure out what the hash came from.</p>
+<p>#3 and #4 make it really hard to triangulate or brute force what the hash came from.</p>
+<p>Unlike cryptographic hashes, it's often easy to find checksum collisions, even for more complex algorithms like CRCs (<a href="https://sar.informatik.hu-berlin.de/research/publications/SAR-PR-2006-05/SAR-PR-2006-05_.pdf">PDF - Reversing CRC</a>).</p>
+<h2 id="chapter-3-my-crime-is-that-of-curiosity">Chapter 3 - My crime is that of curiosity<a class="zola-anchor" href="#chapter-3-my-crime-is-that-of-curiosity" aria-label="Anchor link for: chapter-3-my-crime-is-that-of-curiosity">#</a></h2>
+<p><sup>📝 From <a href="http://www.phrack.org/archives/issues/7/3.txt">The Conscience of a Hacker</a></sub></p>
+<p>How can <code>jesChecksum(pass)</code> equal <code>9887</code>? Here it is:</p>
+<pre data-lang="javascript" style="background-color:#2b2c2f;color:#cccece;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#c594c5;">function </span><span style="color:#6699cc;">jesChecksum</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">str</span><span style="color:#5fb3b3;">) {
+</span><span>  </span><span style="color:#c594c5;">var </span><span>primes </span><span style="color:#5fb3b3;">= </span><span>[ </span><span style="color:#f99157;">2</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">5</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">7</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">11</span><span style="color:#5fb3b3;">,
+</span><span>                </span><span style="color:#f99157;">13</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">17</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">19</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">23</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">29</span><span style="color:#5fb3b3;">,
+</span><span>                </span><span style="color:#f99157;">31</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">37</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">41</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">43</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">47</span><span style="color:#5fb3b3;">,
+</span><span>                </span><span style="color:#f99157;">53</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">59</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">61</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">67</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">71</span><span style="color:#5fb3b3;">,
+</span><span>                </span><span style="color:#f99157;">73</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">79</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">83</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">89</span><span style="color:#5fb3b3;">,</span><span style="color:#f99157;">97</span><span>]</span><span style="color:#5fb3b3;">;
+</span><span>  </span><span style="color:#c594c5;">var </span><span>rtn </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;
+</span><span>
+</span><span>  </span><span style="color:#c594c5;">for </span><span>(i </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">; </span><span>i </span><span style="color:#5fb3b3;">&lt; </span><span>(str</span><span style="color:#5fb3b3;">.</span><span>length)</span><span style="color:#5fb3b3;">; </span><span>i</span><span style="color:#5fb3b3;">++</span><span>) </span><span style="color:#5fb3b3;">{
+</span><span>    tmp </span><span style="color:#5fb3b3;">= </span><span>str</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">charCodeAt</span><span>(i) </span><span style="color:#5fb3b3;">* </span><span>primes[i]</span><span style="color:#5fb3b3;">;
+</span><span>    rtn </span><span style="color:#5fb3b3;">= </span><span>rtn </span><span style="color:#5fb3b3;">+ </span><span>tmp</span><span style="color:#5fb3b3;">;
+</span><span>  </span><span style="color:#5fb3b3;">}
+</span><span>
+</span><span>  </span><span style="color:#c594c5;">return </span><span>rtn</span><span style="color:#5fb3b3;">;
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<p>It may look difficult to solve this without lots of trial and error. After staring at it a bit longer, you'll notice it just takes each letter of the string passed in, multiplies it by a prime at the same position, then adds them all up. </p>
+<p>How does that make things easier? If the string is 1 character, it just needs to have the code <code>4943.5</code>. </p>
+<p>The good news is <a href="https://home.unicode.org/">Unicode</a> does have character codes that high (<a href="https://www.fileformat.info/info/unicode/char/134F/index.htm">4943 is ፏ</a>, <a href="https://www.fileformat.info/info/unicode/char/1350/index.htm">4944 is ፐ</a>). The bad news is they are all integers so we can't get by with a one character password.</p>
+<p>If the string is 2 characters, we just need to solve a nice linear equation <code>2x + 3y = 9887</code> where <code>x</code> will be the first character of the string, and <code>y</code> the second character. The <a href="https://www.hackmath.net/en/calculator/integer-diophantine-equations-solver?input=2x+%2B+3y+%3D+9887&amp;submit=Calculate">Integer Diophantine Equations Solver</a> tells us there are over 500 integer-pairs that will open the lock (although, some don't correspond to existing unicode characters).</p>
+<p>100 is a nice number so I converted each to hex, then looked up each unicode character (<a href="https://www.fileformat.info/info/unicode/char/12a/index.htm">Ī</a>, <a href="https://www.fileformat.info/info/unicode/char/c19/index.htm">ఙ</a>):</p>
+<pre>
+x<sub>100</sub> = 298 = 0x12A => Ī
+y<sub>100</sub> = 3097 = 0xC19 => ఙ
+</pre>
+<p>I've seeded the below RunKit example with that and you can change it to try others.</p>
+<script src="https://embed.runkit.com" data-element-id="jesChecksum"></script>
+<div id="jesChecksum">
+    function jesChecksum(str) {
+  var primes = [ 2, 3, 5, 7,11,
+                13,17,19,23,29,
+                31,37,41,43,47,
+                53,59,61,67,71,
+                73,79,83,89,97];
+  var rtn = 0;
+
+  for (i = 0; i &lt; (str.length); i++) {
+    tmp = str.charCodeAt(i) * primes[i];
+    rtn = rtn + tmp;
+  }
+
+  return rtn;
+}
+
+&#x2F;&#x2F; seeded with U+012A and U+0C19
+jesChecksum(&quot;Īఙ&quot;) &#x2F;&#x2F; = 9887
+</div><h2 id="epilogue-nothing-is-actually-impenetrable">Epilogue - Nothing is actually impenetrable<a class="zola-anchor" href="#epilogue-nothing-is-actually-impenetrable" aria-label="Anchor link for: epilogue-nothing-is-actually-impenetrable">#</a></h2>
+<p><sup>📝 Elliot says this in <a href="https://www.vulture.com/2015/07/mr-robot-recap-season-1-episode-5.html">eps1.4_3xpl0its.wmv</a></p>
+<p>I used to think the stuff Elliot does in Mr Robot was entirely fictional. Then I read this thread:</p>
+<p><a href="https://twitter.com/hydens33k/status/973725064507068416"><img src="https://piannaf.com/blog/a-tale-of-checksums-and-client-side-security/image.png" alt="Tweet from Jek Hyde saying &quot;Which launches me into my Very. First. Physical. Penetration test.&quot;" /></a></p>
+<p>The thing is, there are always security holes whether in the physical world or the software world. And software security is harder than physical security because it obeys <a href="https://hbr.org/2017/05/why-is-cybersecurity-so-hard">different rules</a>.</p>
+<p>There are benefits to processing some security rules or other server-required constraints on the client-side but any <a href="https://cwe.mitre.org/data/definitions/602.html">actual security should be done on the server</a>. The biggest problem with the test environment I got into was it relied entirely on client side validation for security. I could have just bypassed it. It was't even obfuscated, and, though that won't stop someone who really wants to get in, it probably would have stopped me. By the way, <a href="https://danielmiessler.com/study/security-by-obscurity/">adding obscurity on top of security</a> is good practice, just don't let obscurity be your only security.</p>
+<p>Another big problem with the test site was rolling its own &quot;hashing&quot; function. Security is hard. Secure algorithms are hard. Experts created MD5 as a cryptographic hash function but that got <a href="https://en.m.wikipedia.org/wiki/MD5#Security">compromised just a few years later</a>.</p>
+<p>Lastly, even if you do choose the right tool for the job, something may go terribly wrong if you don't use it correctly:</p>
+<p><img src="https://imgs.xkcd.com/comics/encryptic.png" alt="XKCD Encryptic" /></p>
+<figcaption>Explain XKCD has <a href="https://www.explainxkcd.com/wiki/index.php/1286:_Encryptic">amazing details </a> on this one
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>

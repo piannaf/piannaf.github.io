@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://touchlab.co/clarifying-kotlin-multiplatform-naming/" />
+  
+
+  <title>Lions and Tigers and Bears! Clarifying Kotlin Multiplatform naming |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">Lions and Tigers and Bears! Clarifying Kotlin Multiplatform naming</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2020-10-16</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <p>If you recently learned of Kotlin Multiplatform Mobile from the <a href="https://twitter.com/kotlin/status/1300493552997355520">Alpha announcement</a>, there’s plenty of names to make sense of. </p>
+<p>For starters, there’s <strong>Kotlin Multiplatform</strong> or <strong>KMP</strong>, <strong>Kotlin/Native</strong> is also a thing, did I mention <strong>KMPP</strong>? or what about <strong>Kotlin Multiplatform Mobile</strong> or <strong>KMM</strong> described as an SDK plugin in the Alpha announcement? </p>
+<p><img src="https://thumbs.gfycat.com/CreativeUnequaledChamois-size_restricted.gif" alt="Lions, Tigers, Bears - The Wizard Of Oz GIF" /></p>
+<p>After the KMM (sorry!) Alpha announcement, the Twittersphere had some confused faces with questions about how it all fits together. I decided to draw a diagram! In this post, I’ll clarify the confusion about nomenclature and answer frequently asked questions. Keep in mind, at Touchlab we focus on the native mobile part of the Kotlin Multiplatform equation, so I’ll prioritize there. Let’s jump in!</p>
+<p><img src="https://piannaf.com/blog/clarifying-kotlin-multiplatform-naming/image.png" alt="The different names of Kotlin Multiplatform" /></p>
+<p><strong>Kotlin Multiplatform</strong> (or the <strong>KMP</strong> shorthand) is a capability of the Kotlin language that lets you produce shared code for JS, native apps – iOS, Android, desktops, embedded, as well as the more familiar JVM implementation. KMP sits at the top as the category describing using Kotlin to target different end states while sharing code between them. Initially, when developers heard about KMP and looked at the associated multiplatform docs, there was confusion. Why? Because those docs listed out all the targets that KMP supports and associated configurations. It’s overwhelming for both a new and seasoned developer. KMP is a big category. Some teams like <a href="https://kotlinlang.org/lp/mobile/case-studies/quizlet/">Quizlet</a> really care about Kotlin JS and Kotlin Multiplatform Mobile because they have a big web and mobile presence. Other teams like <a href="https://medium.com/plangrid-technology/cross-platform-with-kotlin-native-at-plangrid-3e84b9cfe39c">PlanGrid</a> really pay attention to Desktop because their users (construction workers and managers) rely on desktop. KMP is a diverse ecosystem as the diagram layouts.</p>
+<p>The <strong>Multiplatform Gradle plugin</strong>, which is necessary for any multiplatform development you’re doing, sits to the right. </p>
+<p><strong>Kotlin/Native</strong> is a subset of Kotlin Multiplatform; it’s the compiler for Kotlin that outputs native code for different system architectures. Beneath Kotlin/Native we’ve listed some (there are many more) of the target architecture outputs of different CPUs that the compiler supports. Kotlin/JS has a separate path and doesn’t go through the Kotlin/Native compiler. Kotlin JVM which is what everyone on Android uses also has a separate path and doesn’t go through the Kotlin/Native compiler. Right now, WebAssembly is going through the Kotin/Native compiler, but they’re restructuring it to have its own compiler. Eventually, WebAssembly will be taken out of Kotlin/Native. </p>
+<p>Let’s turn to <strong>Kotlin Multiplatform Mobile</strong> or <strong>KMM</strong>, which is defined as Kotlin Multiplatform for mobile development. The Alpha announcement was a branding exercise to demonstrate KMP for mobile development is maturing and an important focus area. The announcement didn’t get rid of anything else, didn’t change other things, and didn’t change anything drastically in mobile. To that end, we’ve listed the Cocoapods Integration and the Android Studio plugin as examples of additional JetBrains tooling to support mobile development with Kotlin Multiplatform.</p>
+<hr />
+<p>This post originally written for <a href="https://touchlab.co/clarifying-kotlin-multiplatform-naming/">Touchlab</a></p>
+<hr />
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>

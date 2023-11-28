@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://piannaf.com/blog/the-dev-to-feed-algorithm" />
+  
+
+  <title>The Dev.to Feed Algorithm 🤖 |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">The Dev.to Feed Algorithm 🤖</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2020-01-23</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <p><a href="https://piannaf.com/blog/the-dev-to-feed-algorithm/#tl-dr">TL;DR👇</a></p>
+<h2 id="i-used-to-develop-apps-i-still-do-but-i-used-to-too">I used to develop apps. I still do, but I used to, too<a class="zola-anchor" href="#i-used-to-develop-apps-i-still-do-but-i-used-to-too" aria-label="Anchor link for: i-used-to-develop-apps-i-still-do-but-i-used-to-too">#</a></h2>
+<p>Back in 2007/2008, I learned Ruby on Rails and developed two prototype sites that didn't end up in production. Since then, I did extensive work on non-Ruby, non-Rails server applications and learned enough about Android and iOS apps to manage the development of mobile apps in my current role.</p>
+<p>I never touched Ruby on Rails again...until @anshbansal asked a question that I had asked myself a few times before.</p>
+<blockquote>
+<p><a href="https://dev.to/anshbansal/what-is-the-algorithm-for-dev-to-s-feed-5h1c">What is the algorithm for dev.to's feed?</a></p>
+</blockquote>
+<p>The following is my deep dive into the dev.to codebase to answer this question. There are probably a few things wrong, please point them out in the comments so I can correct them. Thank you.</p>
+<h2 id="start-at-the-beginning">Start at the beginning<a class="zola-anchor" href="#start-at-the-beginning" aria-label="Anchor link for: start-at-the-beginning">#</a></h2>
+<p>And it doesn't get much earlier than <a href="https://github.com/thepracticaldev/dev.to/blob/33d6dca565dc5f544eaecac17612fca448357126/config/routes.rb#L409">the root route</a>
+<code>root &quot;stories#index&quot;</code></p>
+<h2 id="taking-control">Taking control<a class="zola-anchor" href="#taking-control" aria-label="Anchor link for: taking-control">#</a></h2>
+<p>Rails follows a Model View Controller (MVC) architecture. When you ask dev.to to show you the root page, it will ask the stories controller to run the index action.</p>
+<p>What we see there is it sets up a bunch of state then <a href="https://github.com/thepracticaldev/dev.to/blob/ba6c70c2d2198b84c3117e5d48e311f4cbbc1863/app/controllers/stories_controller.rb#L136">renders the articles/index template</a>
+<code>render template: &quot;articles/index&quot;</code></p>
+<h2 id="show-me-the-stories">Show me the stories<a class="zola-anchor" href="#show-me-the-stories" aria-label="Anchor link for: show-me-the-stories">#</a></h2>
+<p>If you inspect your dev.to home screen, you'll notice all the articles/stories are listed within an <code>articles-list</code> div. You can <a href="https://github.com/thepracticaldev/dev.to/blob/7bfb255627a2664d76ed033da4c4ad03898b6bfb/app/views/articles/index.html.erb#L37">find it in the articles/index view</a> as expected. </p>
+<p>And here's where we start to see how the feed is populated.</p>
+<h2 id="ok-first-show-me-the-featured-story">OK, first show me the featured story<a class="zola-anchor" href="#ok-first-show-me-the-featured-story" aria-label="Anchor link for: ok-first-show-me-the-featured-story">#</a></h2>
+<p>The first story in the article list is a featured story.</p>
+<p>The algorithm to get the featured story for a logged in user comes from <a href="https://github.com/thepracticaldev/dev.to/blob/ba6c70c2d2198b84c3117e5d48e311f4cbbc1863/app/controllers/stories_controller.rb#L109">the stories controller</a> and <a href="https://github.com/thepracticaldev/dev.to/blob/7bfb255627a2664d76ed033da4c4ad03898b6bfb/app/views/articles/index.html.erb#L87">the articles/index view</a>. I've simplified it by substituting some variables and reorganizing some statements.</p>
+<pre data-lang="ruby" style="background-color:#2b2c2f;color:#cccece;" class="language-ruby "><code class="language-ruby" data-lang="ruby"><span style="color:#5fb3b3;">@</span><span>stories </span><span style="color:#5fb3b3;">= </span><span style="color:#fac863;">Article</span><span style="color:#5fb3b3;">.</span><span>published</span><span style="color:#5fb3b3;">.</span><span>limited_column_select</span><span style="color:#5fb3b3;">.</span><span>page</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">).</span><span>per</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">35</span><span style="color:#5fb3b3;">)
+</span><span style="color:#5fb3b3;">@</span><span>stories </span><span style="color:#5fb3b3;">= @</span><span>stories</span><span style="color:#5fb3b3;">.
+</span><span>  where</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">score &gt; ? OR featured = ?</span><span style="color:#5fb3b3;">&quot;, </span><span style="color:#f99157;">9</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">true</span><span style="color:#5fb3b3;">).
+</span><span>  order</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">hotness_score DESC</span><span style="color:#5fb3b3;">&quot;)
+</span><span>offset </span><span style="color:#5fb3b3;">= [</span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">, 
+</span><span>          </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">2</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">2</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">2</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">4</span><span style="color:#5fb3b3;">, 
+</span><span>          </span><span style="color:#f99157;">5</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">6</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">7</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">8</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">9</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">10</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">11</span><span style="color:#5fb3b3;">].</span><span>sample </span><span style="color:#5f6364;"># random offset, weighted more towards zero
+</span><span style="color:#5fb3b3;">@</span><span>stories </span><span style="color:#5fb3b3;">= @</span><span>stories</span><span style="color:#5fb3b3;">.</span><span>offset</span><span style="color:#5fb3b3;">(</span><span>offset</span><span style="color:#5fb3b3;">)
+</span><span>
+</span><span style="color:#5fb3b3;">@</span><span>featured_story </span><span style="color:#5fb3b3;">= @</span><span>stories</span><span style="color:#5fb3b3;">.</span><span>where</span><span style="color:#5fb3b3;">.</span><span>not</span><span style="color:#5fb3b3;">(</span><span style="color:#99c794;">main_image</span><span style="color:#5fb3b3;">: </span><span style="color:#f99157;">nil</span><span style="color:#5fb3b3;">).</span><span>first</span><span style="color:#5fb3b3;">&amp;.</span><span>decorate </span><span style="color:#5fb3b3;">|| </span><span style="color:#fac863;">Article</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">new
+</span></code></pre>
+<p>In English:</p>
+<blockquote>
+<ol>
+<li>Fetch a collection of stories that score above 9 or are featured</li>
+<li>Order them, starting with the &quot;hottest&quot; one</li>
+<li>Randomly skip the first 0 to 11 stories, weighted more towards 0</li>
+<li>The featured story is the first story that has a main image</li>
+</ol>
+</blockquote>
+<p><em>Leaving how score, featured, and hotness are determined as an exercise for the reader</em></p>
+<p>Notice the featured article has nothing to do with which people, organizations, or tags you follow.</p>
+<h2 id="now-show-me-the-rest-of-the-stories">Now show me the rest of the stories?<a class="zola-anchor" href="#now-show-me-the-rest-of-the-stories" aria-label="Anchor link for: now-show-me-the-rest-of-the-stories">#</a></h2>
+<p>After rendering the featured story, the article/index view creates a <code>substories</code> div and then <a href="https://github.com/thepracticaldev/dev.to/blob/7bfb255627a2664d76ed033da4c4ad03898b6bfb/app/views/articles/index.html.erb#L153">renders the stories/main_stories_feed partial</a>
+<code>&lt;%= render &quot;stories/main_stories_feed&quot; %&gt;</code></p>
+<h2 id="these-are-not-the-divs-you-are-looking-for">These are not the divs you are looking for<a class="zola-anchor" href="#these-are-not-the-divs-you-are-looking-for" aria-label="Anchor link for: these-are-not-the-divs-you-are-looking-for">#</a></h2>
+<p>I was scratching my head while reading through  <a href="https://github.com/thepracticaldev/dev.to/blob/7bfb255627a2664d76ed033da4c4ad03898b6bfb/app/views/stories/_main_stories_feed.html.erb">the _main_stories_feed partial</a></p>
+<p>It populates the data attributes of a <code>new-articles-object</code> div and a <code>home-articles-object</code> div, then a bunch of other divs that have no contents. And the divs I do see when inspecting the home screen have the <code>single-article single-article-small-pic</code> class, but don't look like what's in this file.</p>
+<p>Evil action-at-a-distance like this can only mean one thing: JavaScript</p>
+<h2 id="nobody-expects-the-spanish-inquisition">Nobody expects the Spanish Inquisition<a class="zola-anchor" href="#nobody-expects-the-spanish-inquisition" aria-label="Anchor link for: nobody-expects-the-spanish-inquisition">#</a></h2>
+<p>Searching the repo for <code>new-articles-object</code> and <code>home-articles-object</code>, we find them both in <a href="https://github.com/thepracticaldev/dev.to/blob/c0a7c17054c027b461280ff9fd641a5e5594ca6a/app/assets/javascripts/initializers/initializeFetchFollowedArticles.js.erb#L34">initializeFetchFollowed Articles</a>, called <a href="https://github.com/thepracticaldev/dev.to/blob/c0a7c17054c027b461280ff9fd641a5e5594ca6a/app/assets/javascripts/initializePage.js.erb#L4">very early</a> when a page is initialized.</p>
+<p>And there is a lot of logic here which I did not expect.</p>
+<h2 id="the-new-stories-are-not-the-old-stories">The new stories are not the old stories<a class="zola-anchor" href="#the-new-stories-are-not-the-old-stories" aria-label="Anchor link for: the-new-stories-are-not-the-old-stories">#</a></h2>
+<p><a href="https://github.com/thepracticaldev/dev.to/blob/ba6c70c2d2198b84c3117e5d48e311f4cbbc1863/app/controllers/stories_controller.rb#L113">The stories controller</a> populated the <code>@stories</code> collection used for the for the featured story. It is also used to populate the the data attributes of the <code>home-articles-object</code> div. But that comes next, not now. </p>
+<p>Instead, The first stories we see after the feature article are, populated from <a href="https://github.com/thepracticaldev/dev.to/blob/7bfb255627a2664d76ed033da4c4ad03898b6bfb/app/views/stories/_main_stories_feed.html.erb#L3">a query directly in the view</a>.</p>
+<pre data-lang="ruby" style="background-color:#2b2c2f;color:#cccece;" class="language-ruby "><code class="language-ruby" data-lang="ruby"><span style="color:#5fb3b3;">@</span><span>new_stories </span><span style="color:#5fb3b3;">= </span><span style="color:#fac863;">Article</span><span style="color:#5fb3b3;">.</span><span>published</span><span style="color:#5fb3b3;">.
+</span><span>  where</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">published_at &gt; ? AND score &gt; ?</span><span style="color:#5fb3b3;">&quot;, </span><span style="color:#6699cc;">rand</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">2</span><span style="color:#5fb3b3;">..</span><span style="color:#f99157;">6</span><span style="color:#5fb3b3;">).</span><span>hours</span><span style="color:#5fb3b3;">.</span><span>ago</span><span style="color:#5fb3b3;">, -</span><span style="color:#f99157;">15</span><span style="color:#5fb3b3;">).
+</span><span>  limited_column_select</span><span style="color:#5fb3b3;">.
+</span><span>  order</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">published_at DESC</span><span style="color:#5fb3b3;">&quot;).
+</span><span>  limit</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">rand</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">15</span><span style="color:#5fb3b3;">..</span><span style="color:#f99157;">80</span><span style="color:#5fb3b3;">))
+</span></code></pre>
+<p>In English:</p>
+<blockquote>
+<ol>
+<li>Fetch a collection of stories that have been published some time in the last 2 to 6 hours and score above -15</li>
+<li>Order them by most recent first</li>
+<li>Return the first 15 to 80 of them</li>
+</ol>
+</blockquote>
+<p>Then the JavaScript function <a href="https://github.com/thepracticaldev/dev.to/blob/c0a7c17054c027b461280ff9fd641a5e5594ca6a/app/assets/javascripts/initializers/initializeFetchFollowedArticles.js.erb#L33"><code>insertNewArticles</code></a> takes over:</p>
+<pre data-lang="javascript" style="background-color:#2b2c2f;color:#cccece;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>articlesJSON</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">forEach</span><span>(</span><span style="color:#c594c5;">function</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">article</span><span style="color:#5fb3b3;">){
+</span><span>      </span><span style="color:#c594c5;">var </span><span>articlePoints </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0
+</span><span>      </span><span style="color:#c594c5;">var </span><span>containsUserID </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">findOne</span><span>([article</span><span style="color:#5fb3b3;">.</span><span>user_id]</span><span style="color:#5fb3b3;">, </span><span>user</span><span style="color:#5fb3b3;">.</span><span>followed_user_ids </span><span style="color:#5fb3b3;">|| </span><span>[])
+</span><span>      </span><span style="color:#c594c5;">var </span><span>containsOrganizationID </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">findOne</span><span>([article</span><span style="color:#5fb3b3;">.</span><span>organization_id]</span><span style="color:#5fb3b3;">, </span><span>user</span><span style="color:#5fb3b3;">.</span><span>followed_organization_ids </span><span style="color:#5fb3b3;">|| </span><span>[])
+</span><span>      </span><span style="color:#c594c5;">var </span><span>intersectedTags </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">intersect_arrays</span><span>(user</span><span style="color:#5fb3b3;">.</span><span>followed_tag_names</span><span style="color:#5fb3b3;">, </span><span>article</span><span style="color:#5fb3b3;">.</span><span>cached_tag_list_array)
+</span><span>      </span><span style="color:#c594c5;">var </span><span>followedPoints </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">1
+</span><span>      </span><span style="color:#c594c5;">var </span><span>experienceDifference </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">Math</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">abs</span><span>(article[</span><span style="color:#5fb3b3;">&#39;</span><span style="color:#99c794;">experience_level_rating</span><span style="color:#5fb3b3;">&#39;</span><span>] </span><span style="color:#5fb3b3;">- </span><span>user</span><span style="color:#5fb3b3;">.</span><span>experience_level </span><span style="color:#5fb3b3;">|| </span><span style="color:#f99157;">5</span><span>)
+</span><span>      </span><span style="color:#c594c5;">var </span><span>containsPreferredLanguage </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">findOne</span><span>([article</span><span style="color:#5fb3b3;">.</span><span>language </span><span style="color:#5fb3b3;">|| &#39;</span><span style="color:#99c794;">en</span><span style="color:#5fb3b3;">&#39;</span><span>]</span><span style="color:#5fb3b3;">, </span><span>user</span><span style="color:#5fb3b3;">.</span><span>preferred_languages_array </span><span style="color:#5fb3b3;">|| </span><span>[</span><span style="color:#5fb3b3;">&#39;</span><span style="color:#99c794;">en</span><span style="color:#5fb3b3;">&#39;</span><span>])</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#f99157;">JSON</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">parse</span><span>(user</span><span style="color:#5fb3b3;">.</span><span>followed_tags)</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">map</span><span>(</span><span style="color:#c594c5;">function</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">tag</span><span style="color:#5fb3b3;">) {
+</span><span>        </span><span style="color:#c594c5;">if </span><span>(intersectedTags</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">includes</span><span>(tag</span><span style="color:#5fb3b3;">.</span><span>name)) </span><span style="color:#5fb3b3;">{
+</span><span>          followedPoints </span><span style="color:#5fb3b3;">= </span><span>followedPoints </span><span style="color:#5fb3b3;">+ </span><span>tag</span><span style="color:#5fb3b3;">.</span><span>points
+</span><span>        </span><span style="color:#5fb3b3;">}
+</span><span>      </span><span style="color:#5fb3b3;">}</span><span>)
+</span><span>      articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">+ </span><span>(followedPoints</span><span style="color:#5fb3b3;">*</span><span style="color:#f99157;">2</span><span>) </span><span style="color:#5fb3b3;">+ </span><span>article</span><span style="color:#5fb3b3;">.</span><span>positive_reactions_count
+</span><span>      </span><span style="color:#c594c5;">if </span><span>(containsUserID </span><span style="color:#5fb3b3;">|| </span><span>article</span><span style="color:#5fb3b3;">.</span><span>user_id </span><span style="color:#5fb3b3;">=== </span><span>user</span><span style="color:#5fb3b3;">.</span><span>id) </span><span style="color:#5fb3b3;">{
+</span><span>        articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">+ </span><span style="color:#f99157;">16
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>      </span><span style="color:#c594c5;">if </span><span>(containsOrganizationID) </span><span style="color:#5fb3b3;">{
+</span><span>        articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">+ </span><span style="color:#f99157;">16
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>      </span><span style="color:#c594c5;">if </span><span>(containsPreferredLanguage) </span><span style="color:#5fb3b3;">{
+</span><span>        articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">+ </span><span style="color:#f99157;">1
+</span><span>      </span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else </span><span style="color:#5fb3b3;">{
+</span><span>        articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">- </span><span style="color:#f99157;">10
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>      </span><span style="color:#c594c5;">var </span><span>rand </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">Math</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">random</span><span>()</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#c594c5;">if </span><span>(rand </span><span style="color:#5fb3b3;">&lt; </span><span style="color:#f99157;">0.3</span><span>) </span><span style="color:#5fb3b3;">{
+</span><span>        articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">+ </span><span style="color:#f99157;">3
+</span><span>      </span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else if </span><span>(rand </span><span style="color:#5fb3b3;">&lt; </span><span style="color:#f99157;">0.6</span><span>) </span><span style="color:#5fb3b3;">{
+</span><span>        articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">+ </span><span style="color:#f99157;">6
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>      articlePoints </span><span style="color:#5fb3b3;">= </span><span>articlePoints </span><span style="color:#5fb3b3;">- </span><span>(experienceDifference</span><span style="color:#5fb3b3;">/</span><span style="color:#f99157;">2</span><span>)</span><span style="color:#5fb3b3;">;
+</span><span>      article[</span><span style="color:#5fb3b3;">&#39;</span><span style="color:#99c794;">points</span><span style="color:#5fb3b3;">&#39;</span><span>] </span><span style="color:#5fb3b3;">= </span><span>articlePoints
+</span><span>    </span><span style="color:#5fb3b3;">}</span><span>)</span><span style="color:#5fb3b3;">;
+</span><span>    </span><span style="color:#c594c5;">var </span><span>sortedArticles </span><span style="color:#5fb3b3;">= </span><span>articlesJSON</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">sort</span><span>(</span><span style="color:#c594c5;">function</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">a</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">b</span><span style="color:#5fb3b3;">) {
+</span><span>      </span><span style="color:#c594c5;">return </span><span>b</span><span style="color:#5fb3b3;">.</span><span>points </span><span style="color:#5fb3b3;">- </span><span>a</span><span style="color:#5fb3b3;">.</span><span>points</span><span style="color:#5fb3b3;">;
+</span><span>    </span><span style="color:#5fb3b3;">}</span><span>)</span><span style="color:#5fb3b3;">;
+</span><span>    sortedArticles</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">forEach</span><span>(</span><span style="color:#c594c5;">function</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">article</span><span style="color:#5fb3b3;">){
+</span><span>      </span><span style="color:#c594c5;">var </span><span>parent </span><span style="color:#5fb3b3;">= </span><span>insertPlace</span><span style="color:#5fb3b3;">.</span><span>parentNode</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#c594c5;">if </span><span>( article</span><span style="color:#5fb3b3;">.</span><span>points </span><span style="color:#5fb3b3;">&gt; </span><span style="color:#f99157;">12 </span><span style="color:#5fb3b3;">&amp;&amp; !</span><span style="color:#6699cc;">document</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">getElementById</span><span>(</span><span style="color:#5fb3b3;">&quot;</span><span style="color:#99c794;">article-link-</span><span style="color:#5fb3b3;">&quot;+</span><span>article</span><span style="color:#5fb3b3;">.</span><span>id) ) </span><span style="color:#5fb3b3;">{
+</span><span>        </span><span style="color:#6699cc;">insertArticle</span><span>(article</span><span style="color:#5fb3b3;">,</span><span>parent</span><span style="color:#5fb3b3;">,</span><span>insertPlace)</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>    </span><span style="color:#5fb3b3;">}</span><span>)</span><span style="color:#5fb3b3;">;
+</span></code></pre>
+<p>In English:</p>
+<blockquote>
+<ol>
+<li>Give each article 0 points to start off with</li>
+<li>Sum <a href="https://dev.to/dashboard/following_tags">the weight of each tag</a> (<a href="https://github.com/thepracticaldev/dev.to/pull/1229">which can also be negative</a>) the user follows and this article is tagged with, then double it</li>
+<li>Now add to that, the number of positive reactions the article currently has</li>
+<li>If the user follows the article's author, or is the articles author, add 16 points</li>
+<li>If the user follows the article's organization, add 16 points</li>
+<li>If the article is written in the user's language, add 1 point, otherwise, subtract 10 points</li>
+<li>Randomly (with equal chance) give the article an extra 0, 3, or 6 points.</li>
+<li>Subtract half the difference of this articles experience level vs <a href="https://dev.to/settings/ux">the user's experience</a></li>
+<li>Order the articles by most points first</li>
+<li>If the article has more than 12 points, show it to the user</li>
+</ol>
+</blockquote>
+<h2 id="what-about-the-rest">What about the rest?<a class="zola-anchor" href="#what-about-the-rest" aria-label="Anchor link for: what-about-the-rest">#</a></h2>
+<p>The next batch of initialized articles come from <a href="https://piannaf.com/blog/the-dev-to-feed-algorithm/#ok-first-show-me-the-featured-story">the same batch we got the featured article from</a> and processed by a new (but familiar) algorithm in <a href="https://github.com/thepracticaldev/dev.to/blob/c0a7c17054c027b461280ff9fd641a5e5594ca6a/app/assets/javascripts/initializers/initializeFetchFollowedArticles.js.erb#L84"><code>insertTopArticles</code></a>.</p>
+<p>When you get to the bottom of that list, articles are populated from an <a href="https://github.com/thepracticaldev/dev.to/blob/c0a7c17054c027b461280ff9fd641a5e5594ca6a/app/assets/javascripts/initializers/initializeFetchFollowedArticles.js.erb#L148">algoliasearch index of ordered articles</a>. The <a href="https://github.com/thepracticaldev/dev.to/blob/4e5dc015b377f922b96d698d4e8da2c46b8ff973/app/models/article.rb#L171">definition of that index</a> is found in the Article model.</p>
+<p>Finally, scrolling kicks in which you can find in <a href="https://github.com/thepracticaldev/dev.to/blob/157a6f1ef17948cffcbe4997b85811cbc3be452d/app/assets/javascripts/initializers/initScrolling.js.erb#L203">initScrolling.js.erb</a> and populates more articles from the algoliasearch index.</p>
+<p><em>Leaving the details of these as an exercise for the reader</em></p>
+<h2 id="tl-dr">TL;DR<a class="zola-anchor" href="#tl-dr" aria-label="Anchor link for: tl-dr">#</a></h2>
+<p>For the first article in the list:</p>
+<blockquote>
+<ol>
+<li>Fetch a collection of stories that score above 9 or are featured</li>
+<li>Order them, starting with the &quot;hottest&quot; one</li>
+<li>Randomly skip the first 0 to 11 stories, weighted more towards 0</li>
+<li>The featured story is the first story that has a main image</li>
+</ol>
+</blockquote>
+<p>For the next batch of articles:</p>
+<blockquote>
+<ol>
+<li>Fetch a collection of stories that have been published some time in the last 2 to 6 hours and score above -15</li>
+<li>Order them by most recent first</li>
+<li>Return the first 15 to 80 of them</li>
+<li>Give each article 0 points to start off with</li>
+<li>Sum <a href="https://dev.to/dashboard/following_tags">the weight of each tag</a> (<a href="https://github.com/thepracticaldev/dev.to/pull/1229">which can also be negative</a>) the user follows and this article is tagged with, then double it</li>
+<li>Now add to that, the number of positive reactions the article currently has</li>
+<li>If the user follows the article's author, or is the articles author, add 16 points</li>
+<li>If the user follows the article's organization, add 16 points</li>
+<li>If the article is written in the user's language, add 1 point, otherwise, subtract 10 points</li>
+<li>Randomly (with equal chance) give the article an extra 0, 3, or 6 points.</li>
+<li>Subtract half the difference of this articles experience level vs <a href="https://dev.to/settings/ux">the user's experience</a></li>
+<li>Order the articles by most points first</li>
+<li>If the article has more than 12 points, show it to the user</li>
+</ol>
+</blockquote>
+<p>If you've scrolled passed all of those,</p>
+<blockquote>
+<ol>
+<li>Using the same collection the featured article came from</li>
+<li>Process with <a href="https://github.com/thepracticaldev/dev.to/blob/c0a7c17054c027b461280ff9fd641a5e5594ca6a/app/assets/javascripts/initializers/initializeFetchFollowedArticles.js.erb#L84">a similar but different algorithm as the previous batch</a></li>
+</ol>
+</blockquote>
+<p>And, finally</p>
+<blockquote>
+<p><a href="https://github.com/thepracticaldev/dev.to/blob/4e5dc015b377f922b96d698d4e8da2c46b8ff973/app/models/article.rb#L197">All articles ordered by hotness</a></p>
+</blockquote>
+<h2 id="closing-remarks">Closing remarks<a class="zola-anchor" href="#closing-remarks" aria-label="Anchor link for: closing-remarks">#</a></h2>
+<p>This could change at any time. For example, on 2019-09-19, @ben merged a PR to <a href="https://github.com/thepracticaldev/dev.to/pull/4069">add more variation to home feed</a>. All links to github are to the commit that I saw which was in <code>master</code> at the time of writing but, by the time you read this, <code>master</code> has probably moved on.</p>
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>
