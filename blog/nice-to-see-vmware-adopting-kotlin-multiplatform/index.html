@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://touchlab.co/nice-to-see-vmware-adopting-kotlin-multiplatform/" />
+  
+
+  <title>Nice to see VMWare adopting Kotlin Multiplatform |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">Nice to see VMWare adopting Kotlin Multiplatform</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2019-11-19</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <p>I saw Hadi's tweet and I couldn't agree more.</p>
+<p><img src="https://piannaf.com/blog/nice-to-see-vmware-adopting-kotlin-multiplatform/image.png" alt="Hadi's tweet saying &quot;Nice to see VMWare adopting Kotlin Multiplatform&quot;" /></p>
+<p>There are more and more (respected and influential) companies, like <a href="https://medium.com/vmware-end-user-computing/adopting-a-cross-platform-strategy-for-mobile-apps-59495ffa23b0">VMWare</a> experimenting with and talking about Kotlin Multiplatform. Some have put it into production already.</p>
+<h2 id="personal-thoughts">Personal Thoughts<a class="zola-anchor" href="#personal-thoughts" aria-label="Anchor link for: personal-thoughts">#</a></h2>
+<p>Here are a few quotes from VMWare's post and my thoughts:</p>
+<h3 id="experimental-technology">Experimental Technology<a class="zola-anchor" href="#experimental-technology" aria-label="Anchor link for: experimental-technology">#</a></h3>
+<blockquote>
+<p>Kotlin Multiplatform is still an experimental technology. It’s very early on in its days, and is subject to breaking changes going forward.</p>
+</blockquote>
+<p>There are a lot of people who are afraid of this, but we should remember that Swift was also in that state until version 4, and version 5 was the first to introduce binary stability so binary frameworks would work with future releases of Swift. That didn't stop people from learning it, experimenting with it, and putting it into production. Because they trusted Apple.</p>
+<p>JetBrains has a long history of building developer trust. The Kotlin Multiplatform early adopters trust JetBrains. And, it is again, well deserved. Android Studio is built on IntelliJ and Google made Kotlin the official language of Android starting in 2017. You and VMWare aren't risking much to experiment with Kotlin Multiplatform now.</p>
+<h3 id="library-support">Library Support<a class="zola-anchor" href="#library-support" aria-label="Anchor link for: library-support">#</a></h3>
+<blockquote>
+<p>One issue you will most likely encounter with Kotlin Multiplatform, is that the set of libraries that support it are very small at this point</p>
+</blockquote>
+<p>This is true. And that's why <a href="https://touchlab.co/touchlab-square-collaborating-on-kotlin-multiplatform/">Touchlab is working with Square</a> and developing the <a href="https://github.com/touchlab/xcode-kotlin">xcode-kotlin plugin</a> and making SQLDelight the recommended multiplatform persistence solution (see @joreilly's <a href="https://johnoreilly.dev/posts/sqldelight-multiplatform/">writeup</a>) and we want to support and elevate community projects when we can, like <a href="https://github.com/russhwolf/multiplatform-settings">Multiplatform Settings</a> and more.</p>
+<p>And, of course, JetBrains isn't letting us down on this front. The most recent example is ongoing work to support multithreaded coroutines in Kotlin Native. It's one of the biggest missing pieces and <a href="https://dev.to/touchlab/kotlin-native-coroutines-preview-3edc">it's getting very close to ready</a>.</p>
+<h3 id="leverage-native-android-and-ios-libraries">Leverage Native Android and iOS Libraries<a class="zola-anchor" href="#leverage-native-android-and-ios-libraries" aria-label="Anchor link for: leverage-native-android-and-ios-libraries">#</a></h3>
+<blockquote>
+<p>It wasn’t the most elegant solution, but it was better than writing our own version of libphonenumber by a mile (or several).</p>
+</blockquote>
+<p>The interop story is really where Kotlin Multiplatform shines. Other solutions require bridges, channels, JNI on Android, and/or excessive boilerplate. When you run into the &quot;set of libraries&quot; issue above, you can still use existing, battle-tested libraries from the native ecosystems.</p>
+<p>This interop story also allows for incremental refactoring that significantly lowers the risk of adopting an &quot;experimental&quot; technology. I wrote about this in some detail in <a href="https://piannaf.com/blog/kotlin-multiplatform-can-t-do-it-all-which-is-exactly-why-you-should-try-it/">Kotlin Multiplatform Can't Do It All. Which is Exactly Why You Should Try It!</a></p>
+<h3 id="more-to-come">More to Come<a class="zola-anchor" href="#more-to-come" aria-label="Anchor link for: more-to-come">#</a></h3>
+<blockquote>
+<p>Stay on the lookout for follow up posts where I will talk more about additional features, issues, and how to get the most out of Kotlin Multiplatform</p>
+</blockquote>
+<p>I am very much looking forward to more. And I hope you all are too!</p>
+<hr />
+<p>This post originally written for <a href="https://touchlab.co/nice-to-see-vmware-adopting-kotlin-multiplatform/">Touchlab</a></p>
+<hr />
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>

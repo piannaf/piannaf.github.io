@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://piannaf.com/blog/self-hosted-twitter-archive-with-github-pages-subdomain" />
+  
+
+  <title>Self Hosting Twitter Archive on Github Pages |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">Self Hosting Twitter Archive on Github Pages</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2023-06-14</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <p>TL;DR: I processed my Twitter Archive with Tweetback and host it on a subdomain with Github Pages → <a href="https://tweets.piannaf.com/">https://tweets.piannaf.com/</a></p>
+<h2 id="leaving-twitter">Leaving Twitter<a class="zola-anchor" href="#leaving-twitter" aria-label="Anchor link for: leaving-twitter">#</a></h2>
+<p>My <strong>#TwitterMigration</strong> consisted of a few steps</p>
+<ol>
+<li>Look at where other folks are going</li>
+<li>Pick a Mastodon server</li>
+<li>Stop posting directly to Twitter
+<ol>
+<li>Download Twitter archive</li>
+<li>Cross-post from Mastodon to Twitter</li>
+</ol>
+</li>
+<li>Stop retweeting tweets</li>
+<li>Start donating to my Mastodon server maintainers</li>
+<li>Stop liking tweets</li>
+<li>Publish my Twitter archive</li>
+</ol>
+<p>Step 7, publish my Twitter archive, has been a TODO for quite a while. I had downloaded my Twitter archive in Nov 2022, so after a year, it was time to complete it. ✅</p>
+<p>(I also had a plan to eventually stop cross-posting, but didn’t have an ETA. Musk decided for me by turning off the API)</p>
+<h2 id="self-hosting-options">Self-hosting options<a class="zola-anchor" href="#self-hosting-options" aria-label="Anchor link for: self-hosting-options">#</a></h2>
+<p>With tweet archives having been a thing for so long, and the many technical people leaving Twitter, I expected there to be almost as many Twitter archive publishing options as there are Mastodon clients.</p>
+<p>Between at least <a href="https://boffosocko.com/2016/12/05/how-to-own-display-your-twitter-archive-on-your-website-in-under-10-minutes/">2016</a> and <a href="https://www.digitaldiscovery.sg/blog/host-twitter-archive-github/">2018</a>, the Twitter archive you could download was something you’d be OK simply hosting. Some minor account details, simple search, and mostly a giant list of tweets with timeline metrics on the side. Perfect.</p>
+<p><img src="https://piannaf.com/blog/self-hosted-twitter-archive-with-github-pages-subdomain/image.png" alt="Kevin Marks' self-hosted twitter archive ending 2019" /></p>
+<p>— <a href="https://www.kevinmarks.com/tweets/">https://www.kevinmarks.com/tweets/</a></p>
+<p>Take a look at my Twitter archive from 2022:</p>
+<p><img src="https://piannaf.com/blog/self-hosted-twitter-archive-with-github-pages-subdomain/image-1.png" alt="Justin Mancinelli's twitter archive downloaded in 2022" /></p>
+<p>While I’m OK with people knowing how many accounts I’ve blocked and muted, I’m not OK with people seeing Account details like my phone number, viewing my DMs, or looking at superfluous stuff like the privacy sidebar and ads I may have seen. </p>
+<p>Top search results for processing the twitter archive brought me to a <a href="https://piraces.dev/posts/twitter-own-archive-updated/">blog post about Tweetback</a> and <a href="https://www.wired.com/story/how-to-make-public-twitter-archive/">a news article about Tiny Subversion’s tool</a>. And also a tool last updated in 2018 called <a href="https://github.com/rknightuk/one40">One40</a> that was updated 10 months ago to tell everyone it is deprecated and everyone should look at <a href="https://github.com/tweetback/tweetback">Tweetback</a> and <a href="https://tinysubversions.com/twitter-archive/make-your-own/">Tiny Subversion’s tool</a> 😉.</p>
+<p>So it seems there are two tools to choose from these days. Tiny Subversion’s tool is awesome because it is as simple as uploading the Twitter archive and getting back the static site for hosting. However, it doesn’t have the user experience I want. Tweetback is closer in look and feel to the site in the Twitter archive, I like the focus on recent tweets first, and I love the metrics at the bottom. I also feel more confident it will be easier to edit Tweetback’s code in the future to make it more of what I’d like it to be.</p>
+<h2 id="publishing-with-tweetback">Publishing with Tweetback<a class="zola-anchor" href="#publishing-with-tweetback" aria-label="Anchor link for: publishing-with-tweetback">#</a></h2>
+<p>Almost as easy as uploading a zip.</p>
+<p>There are several tutorials/blog posts about people building with Tweetback. The one I linked to earlier, <a href="https://piraces.dev/posts/twitter-own-archive-updated/">“Take ownership of your Twitter data, set-up your own Twitter updated archive in GitHub” by Raúl Piracé</a> helped me the most. I found Raúl’s instructions on setting up and building Tweetback easier to follow than the ones in the README. Probably because it’s a bit more conversational and has better text formatting.</p>
+<h2 id="removing-x">Removing X<a class="zola-anchor" href="#removing-x" aria-label="Anchor link for: removing-x">#</a></h2>
+<p><img src="https://piannaf.com/blog/self-hosted-twitter-archive-with-github-pages-subdomain/image-2.png" alt="Tweet metadata from Tweetback includes an X icon linking back to X" /></p>
+<p>Seeing the X logo and linking back to X definitely had to go before going public 🙅‍♂️.</p>
+<p>There’s a pesky line in twitter.js that links to the <del>tweet</del> post on <del>Twitter</del> X with the <del>Twitter</del> X logo. I just deleted it 💥.</p>
+<p><img src="https://piannaf.com/blog/self-hosted-twitter-archive-with-github-pages-subdomain/image-3.png" alt="Tweet metadata from modified Tweetback does not show X icon or link back to X" /></p>
+<p>I thought about creating a config option to toggle whether X is there. I even found that just two weeks before writing this, the <a href="https://github.com/tweetback/tweetback/commit/bb062375898f5f6e4f338681cdfe8aa9f90e36da#diff-36a659af5021ea41791e1943be2d81d731ecac74eec458a97fc955a63751325cR20">functionality was added to switch over to the X logo</a>. But I really don’t want anyone to be heading back there. So DELETE it is. </p>
+<h2 id="hosting-on-github-pages">Hosting on Github Pages<a class="zola-anchor" href="#hosting-on-github-pages" aria-label="Anchor link for: hosting-on-github-pages">#</a></h2>
+<p>There are a lot of posts about hosting a single repo on Github Pages. And <a href="https://piraces.dev/posts/twitter-own-archive-updated/">Raúl Piracé’s post</a> has a section about showing how he published to <a href="https://tweets.piraces.dev/">https://tweets.piraces.dev/</a>. Good start.</p>
+<p>But hosting multiple repos on subdomains? The first post that made me think this could be possible was about <a href="https://deanattali.com/blog/multiple-github-pages-domains/#step1">hosting multiple Github Pages on different domains</a> 🤔</p>
+<p>Then, I read a bunch of posts, comments, and StackOverflow answers that made it sound like it wouldn’t be possible 😦</p>
+<p>I wasn’t about to give up, but I was also frustrated with not finding anything on the internet to give me the exact answer. So I gave something a try, and, it turns out, just adding another CNAME like Raúl did, does the trick. </p>
+<p><img src="https://piannaf.com/blog/self-hosted-twitter-archive-with-github-pages-subdomain/image-4.png" alt="DNS configuration with two CNAME entries, one with host name &quot;tweets.piannaf.com&quot; and one with &quot;www.piannaf.com&quot;, both with data &quot;piannaf.github.io.&quot;" /></p>
+<p>Notice there’s a CNAME for both my main site (the www subdomain), and the tweets subdomain. Github is doing something they don’t document well, and no one else has really written about so this just works. Well, not “just”. The first time I entered the custom domain for “tweets” it gave a certificate provisioning error. The second time, it worked 🤷</p>
+<p>(While waiting for changes to propagate, I continued searching the internet and found <a href="https://stackoverflow.com/a/72640415">“Github user page and project page in different subdomains of the same domain?” on Stack Overflow</a>. Didn’t need it anymore, but good to know it’s there 😃)</p>
+<hr />
+<p>It's nice to see my &quot;Inbox by Gmail&quot; tweet was one of my most popular tweets. Check it out <a href="https://tweets.piannaf.com/">https://tweets.piannaf.com/</a></p>
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>

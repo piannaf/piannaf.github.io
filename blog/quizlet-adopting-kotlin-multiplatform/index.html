@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://dev.to/touchlab/quizlet-adopting-kotlin-multiplatform-51l6" />
+  
+
+  <title>Quizlet Adopting Kotlin Multiplatform |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">Quizlet Adopting Kotlin Multiplatform</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2019-12-18</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <p><a href="https://twitter.com/kpgalligan">@kpgalligan</a> shared Quizlet's Medium post, <a href="https://medium.com/tech-quizlet/shared-code-at-quizlet-kotlin-multiplatform-2ee1b57646c">Shared Code at Quizlet: Deciding on Kotlin Multiplatform</a>, the day it dropped. </p>
+<p>I then discovered <a href="https://twitter.com/ankushg">@ankushg</a> had already let that cat out of the bag nearly 2 months earlier:</p>
+<p><img src="https://piannaf.com/blog/quizlet-adopting-kotlin-multiplatform/image-1.png" alt="Tweet by Ankush Gupta including the sentence: &quot;We also use Kotlin Multiplatform to share business logic across iOS (Native), Web (JS), and ofc Android&quot;" /></p>
+<p>It's a super interesting read because it tells the story of trying to share with JavaScript first, thinking about sharing with C++, then finally deciding on Kotlin Multiplatform.</p>
+<p>I'm a fan of the term &quot;platform citizen&quot; but it's probably a coincidence that they used it too:</p>
+<blockquote>
+<p>Kotlin Multiplatform promises the ability to write code in Kotlin and have it run as a first-class citizen on each platform.</p>
+</blockquote>
+<hr />
+<p>But here are my favorite takeaways:</p>
+<p><strong>General</strong></p>
+<blockquote>
+<p>For many businesses, requiring internet connectivity for core product features might be a very reasonable requirement! Quizlet however has a particularly strong affinity for mobile users with limited Internet access.
+...
+By focusing our shared code efforts on code based around state management and control flow, we saved our engineering team countless person-hours with minimal time spent on cross-platform threading or concurrency concerns.</p>
+</blockquote>
+<p><strong>JavaScript</strong></p>
+<blockquote>
+<p>these issues resulted in an ecosystem where frontend web developers might have felt comfortable writing shared code, but mobile developers certainly did not feel comfortable consuming it.
+...
+We were able to write our most critical business logic in one place, ship it across multiple platforms, and unblock our resource-constrained native mobile teams. Most importantly, we were able to do this without committing to writing our entire client with the same framework.</p>
+</blockquote>
+<p><strong>Kotlin Multiplatform</strong></p>
+<blockquote>
+<p>even our frontend web engineers found themselves impressed by Kotlin.
+...
+In early 2019, Quizlet migrated all of our shared code over to Kotlin Multiplatform, and we are using it in production to serve over 50 million monthly active users.</p>
+</blockquote>
+<hr />
+<p>Please read the whole thing: <a href="https://medium.com/tech-quizlet/shared-code-at-quizlet-kotlin-multiplatform-2ee1b57646c">Shared Code at Quizlet: Deciding on Kotlin Multiplatform</a></p>
+<p>And check out their mention in the KotlinConf Keynote alongside a several other great examples of Kotlin Multiplatform in production</p>
+<div>
+    <iframe class="youtube-iframe"
+        src="https://www.youtube.com/embed/0xKTM0A8gdI"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen>
+    </iframe>
+</div><figcaption>Skip to 13:00 for Mobile Multiplatform mentions</figcaption>
+<hr />
+<p>This post originally written for <a href="https://dev.to/touchlab/quizlet-adopting-kotlin-multiplatform-51l6">Touchlab</a></p>
+<hr />
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>

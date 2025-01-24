@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+  <link rel="icon" href="https:&#x2F;&#x2F;piannaf.com&#x2F;processed_images&#x2F;portrait.b17a4ccf37f2e20a.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="utf-8">
+
+  <!-- Custom header for users, includes custom css or js here -->
+  
+    <link rel="canonical" href="https://piannaf.com/blog/zola-in-codespaces" />
+  
+
+  <title>Zola in Codespaces |   Justin Mancinelli</title>
+
+  
+<!-- CSS -->
+<link rel="stylesheet" href="https://piannaf.com/styles/styles.css" />
+
+    <title>Blog |  Justin Mancinelli</title>
+
+        
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B07SSRVEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B07SSRVEYQ');
+</script>
+
+
+      
+    </head>
+
+<body class="bg-white">
+  <!-- Top nav bar -->
+  
+<nav id="header" class="w-full z-10 top-0 shadow-md mx-0">
+  <div id="progress" class="top-0"></div>
+  <!-- <div class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between mt-0 py-2  sm:bg-green-900 md:bg-red-900 lg:bg-blue-900 bg-yellow-900"> -->
+  <div class="w-full max-w-4xl mx-auto flex sm:flex-nowrap flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4">
+      <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="https:&#x2F;&#x2F;piannaf.com/">
+        Justin Mancinelli
+      </a>
+    </div>
+
+    <div class="w-full flex-grow sm:flex sm:items-center flex-wrap sm:flex-nowrap sm:w-auto mt-2 sm:mt-0 bg-transparent z-20" id="nav-content">
+      <ul class="list-reset flex flex-wrap sm:justify-end flex-1 items-center">
+          <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/blog" class="inline-block py-2 px-4 text-sky-600 font-bold no-underline">
+                Blog
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/publications" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Videos
+              </a>
+            </li>
+            <li class="mr-3 text-sm">
+              <a href="https://piannaf.com/tweets" class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4">
+                Twitter Archive
+              </a>
+            </li>
+            </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Container -->
+  
+<div class="container max-w-3xl mx-auto px-4">
+  <div class="pt-8 flex">
+    <h1 class="grow font-bold font-sans break-normal text-gray-900 text-3xl">Zola in Codespaces</h1>
+    <p class="text-sm md:text-base font-normal text-gray-600 py-2">Published 2023-06-14</p>
+  </div>
+  <hr class="border-b-1 border-gray-400 mb-8">
+  <article class="prose prose-indigo max-w-3xl">
+    
+    <h2 id="choosing-zola-and-codespaces">Choosing Zola and Codespaces<a class="zola-anchor" href="#choosing-zola-and-codespaces" aria-label="Anchor link for: choosing-zola-and-codespaces">#</a></h2>
+<p>My personal computer is actually a MacBook Air from mid 2012. Not the best for programming these days. It can’t even process 1080p H264 videos fast enough to stream over Plex. There’s also the issue of disk space. At 64G, it’s pretty easy to run out of space after downloading dependencies, tools, all the personal apps and files, oh and MacOS itself (just over 10G at the time of writing). I’d rather just focus this old hardware on browsing the web. Luckily, <a href="https://github.com/features/codespaces">GitHub Codespaces</a> turns software development into “browsing the web”, at least as far as my computer is concerned.</p>
+<p>As I was setting up this site, I knew I wanted it to be static and host it on <a href="https://pages.github.com/">GitHub Pages</a>. There are approximately 200 billion trillion stars in the universe, which coincidentally, is just about how many static site generators there are. I’ve played around with Hugo, Jekyll, 11ty, Next.js, and Svelte but never stuck with it. For this go around, I wanted to try one written in Rust. I’m less than 100 pages into <a href="https://doc.rust-lang.org/book/">The Rust Programming Language book</a>, but I’ve heard so many great things from the community that I just wanted to dive in. There are <a href="https://jamstack.org/generators/">approximately 3 static site generators written in Rust</a>. I picked <a href="https://www.getzola.org/">Zola</a> because it has a large community, is actively maintained, and more feature-full (not that I need a lot of features).</p>
+<p>I installed and ran Zola locally first to try it out and it worked just fine. So I could just edit my posts in Vim, preview locally, and push to prod, but: one, I don’t want this to be a dev machine; two, where’s the fun in that?</p>
+<h2 id="this-issue-with-codespaces">This issue with Codespaces<a class="zola-anchor" href="#this-issue-with-codespaces" aria-label="Anchor link for: this-issue-with-codespaces">#</a></h2>
+<p>The first issue I ran into is I couldn’t find a Codespaces template with Zola already installed. That’s fine. There’s a <a href="https://github.com/codespaces-examples/rust">Codespaces Rust Starter</a> written by a few amazing people. I opened it in a Codespace, installed Zola, the port forwarding worked flawlessly, and I could see the initial page running. Now, when I say “port forwarding worked flawlessly”, I mean that in the way developers say something works but users beg to differ. Technically, the port for serving the page and the port for serving <a href="https://github.com/livereload/livereload-js">LiveReload</a> over websockets were working. But, LiveReload was erroring because it couldn’t actually talk back to the server. The issue being that Codespaces forwards ports over HTTP and gives each its own address.</p>
+<p>The simplest way to use livereload is to <a href="https://github.com/livereload/livereload-js/blob/c85ac0db2d46584eb488cad7f46a541a37f43602/README.md?plain=1#L25">host it from the livereload server</a>, that way the livereload library will just connect to the host and port which is serving it. When Zola injects the livereload script tag into the page, <a href="https://github.com/getzola/zola/blob/93d61cdf7233c5839220ee5948528337107a0653/components/site/src/lib.rs#L545">it specifies the port it used to start the websocket server</a> but the host will be inferred by the livereload library as the current page’s address. That’s a problem for Codespaces because each port gets its own address. Luckily, <a href="https://github.com/livereload/livereload-js/blob/master/README.md?plain=1#L117">livereload lets you specify a host in the query string</a>, too. I found <a href="https://github.com/getzola/zola/issues/1560#issuecomment-885867717">an issue comment in the Zola repo</a> to corroborate that specifying the right host over port 80 or 443 should do the trick. But what’s the right host? <a href="https://docs.github.com/en/codespaces/developing-in-codespaces/default-environment-variables-for-your-codespace">GitHub Codespaces environments export environment variables</a> to figure that out.</p>
+<p>So with all this info, if Zola is running in a Codespace, it should change the injected script tag from</p>
+<pre data-lang="rust" style="background-color:#2b2c2f;color:#cccece;" class="language-rust "><code class="language-rust" data-lang="rust"><span>format!</span><span style="color:#5fb3b3;">(</span><span style="color:#c594c5;">r</span><span style="color:#5fb3b3;">#</span><span style="color:#99c794;">&quot;&lt;script src=&quot;/livereload.js?port={}&amp;amp;mindelay=10&quot;&gt;&lt;/script&gt;</span><span style="color:#5fb3b3;">&quot;#,</span><span> port</span><span style="color:#5fb3b3;">,);
+</span></code></pre>
+<p>to</p>
+<pre data-lang="rust" style="background-color:#2b2c2f;color:#cccece;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#c594c5;">let</span><span> codespace_name </span><span style="color:#5fb3b3;">= </span><span>std</span><span style="color:#5fb3b3;">::</span><span>env</span><span style="color:#5fb3b3;">::</span><span>var</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">CODESPACE_NAME</span><span style="color:#5fb3b3;">&quot;).</span><span style="color:#6699cc;">unwrap</span><span style="color:#5fb3b3;">();
+</span><span style="color:#c594c5;">let</span><span> codespace_port_domain </span><span style="color:#5fb3b3;">= </span><span>std</span><span style="color:#5fb3b3;">::</span><span>env</span><span style="color:#5fb3b3;">::</span><span>var</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN</span><span style="color:#5fb3b3;">&quot;).</span><span style="color:#6699cc;">unwrap</span><span style="color:#5fb3b3;">();
+</span><span style="color:#c594c5;">let</span><span> host </span><span style="color:#5fb3b3;">= </span><span>format!</span><span style="color:#5fb3b3;">(&quot;</span><span style="color:#99c794;">{}-{}.{}</span><span style="color:#5fb3b3;">&quot;,</span><span> codespace_name</span><span style="color:#5fb3b3;">,</span><span> port</span><span style="color:#5fb3b3;">,</span><span> codespace_port_domain</span><span style="color:#5fb3b3;">);
+</span><span>format!</span><span style="color:#5fb3b3;">(</span><span style="color:#c594c5;">r</span><span style="color:#5fb3b3;">#</span><span style="color:#99c794;">&quot;&lt;script src=&quot;/livereload.js?host={}&amp;amp;port={}&amp;amp;mindelay=10&quot;&gt;&lt;/script&gt;</span><span style="color:#5fb3b3;">&quot;#,</span><span> host</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">443</span><span style="color:#5fb3b3;">,);
+</span></code></pre>
+<p>Note the port Zola uses to run the livereload server becomes part of the host variable, and the port passed to the script is 443. Without specifying a port for the script, <a href="https://github.com/livereload/livereload-js/blob/0300e8e34ec573e160aeb5b352510be03d81f797/src/options.js#L5">it will default to 35729</a>.</p>
+<h2 id="so-now-it-works-nope-but-there-s-a-workaround">So now it works? Nope. But there’s a workaround<a class="zola-anchor" href="#so-now-it-works-nope-but-there-s-a-workaround" aria-label="Anchor link for: so-now-it-works-nope-but-there-s-a-workaround">#</a></h2>
+<p>Sometimes it seemed to work, but sometimes not. I tried refreshing in different ways, using different browsers, different combinations of incognito and not. A fun side quest was to <a href="https://web.archive.org/web/20220429053637/http://enterprisewebbook.com/ch8_websockets.html">read all about websockets</a>, and <a href="https://mtyiu.site/tutorials/9/ws-debug/">how to debug them</a>, which led me to realize that there was nothing wrong with how Zola was serving things from Codespaces or how the script was getting called/addressed from the client.</p>
+<p>The problem was GitHub authentication. Not that authentication is a problem. But when you want live reload to “just work” and it doesn’t, it sure feels like a problem.</p>
+<p>Of course, <a href="https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#using-command-line-tools-and-rest-clients-to-access-ports-1">GitHub’s got your back</a></p>
+<blockquote>
+<p>to connect to a private port at the remote domain, you must authenticate by using the GITHUB_TOKEN access token in your request.</p>
+</blockquote>
+<p>Except, if you clicked on that link, you’d see it’s in the section “Using command-line tools and REST clients to access ports”.</p>
+<p>This can’t be used by livereload because it <a href="https://github.com/livereload/livereload-js/blob/af658470433d1d0cdc1a3ad272fc911efced967f/src/connector.js#L13">creates a web socket URI</a> from the host parameter then <a href="https://github.com/livereload/livereload-js/blob/af658470433d1d0cdc1a3ad272fc911efced967f/src/connector.js#L78">passes that along to the browser’s WebSocket constructor</a>. After learning about WebSockets, I now know that you can’t alter the headers of a websocket — it isn’t an option in <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">the constructor or instance methods</a>. The host address trick isn’t going to work so simply. Maybe a modified version of livereload.js could open a request to the host over http first with the GITHUB_TOKEN in the headers before trying to open the websocket connection? That would also require modifying Zola to pass along that information... no, too much work.</p>
+<p>So, two workarounds:</p>
+<ol>
+<li>Make the port public</li>
+<li>Open manually first</li>
+</ol>
+<p>Since the Codespace URL isn’t so easy to guess, maybe <a href="https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#sharing-a-port-1">making the port public</a> isn’t so bad. Unfortunately, there’s no way to use the <a href="https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers#devcontainerjson">devcontainer.json</a> to configure that the port be made public every time the Codespace is run. Codespaces are able to <a href="https://docs.github.com/en/codespaces/customizing-your-codespace/personalizing-github-codespaces-for-your-account#dotfiles">load dotfiles from a dotfiles repository</a>, so some series of incantations eventually leading to <a href="https://cli.github.com/manual/gh_codespace_ports_visibility">a GitHub CLI command altering the port visibility</a> might work. But that’s a global thing for every Codespace and, also, too much work.</p>
+<p>So that means, opening the livereload address in the browser manually is the workaround for me. I didn’t actually know if this would work. Opening the livereload address in a new tab automatically authenticates via github, since I am already authenticated, but it gives an error because there’s no webserver running on that “port”. However, once authenticated, it allows the livereload client on the actual web “port” to open the websocket over the livereload “port”. And that’s all I ever really wanted.</p>
+
+    </article>
+</div>
+<!-- <div class="sticky bottom-0 px-3">
+    <a href="#page-top">Back to top of page</a>
+  </div> -->
+  <footer class="bg-white">
+    <div class="bg-white text-gray-400 container max-w-4xl mx-auto my-8 px-4 text-center">
+    © Justin Mancinelli. Made with <a class="underline" target="_blank" href="https://getzola.org">zola</a> and customized <a class="underline" target="_blank" href="https://github.com/adfaure/kodama-theme">Kodama</a> theme.
+    </div>
+  </footer>
+  </body>
+
+</html>
